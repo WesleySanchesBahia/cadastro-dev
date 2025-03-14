@@ -1,0 +1,13 @@
+<form [formGroup]="userForm" (ngSubmit)="submit()">
+  <button type="button" (click)="buscarUserGitHub()">Cadastrar com GitHub</button>
+
+  <input formControlName="githubUsername" placeholder="Usuário GitHub" />
+  <input formControlName="avatarUrl" placeholder="Avatar (URL)" />
+  <input formControlName="name" placeholder="Nome" required />
+  <input formControlName="email" placeholder="Email" required />
+  <input formControlName="city" placeholder="Cidade" />
+  <input formControlName="education" placeholder="Formação" />
+  <input formControlName="technologies" placeholder="Tecnologias" />
+
+  <button type="submit" [disabled]="userForm.invalid">Cadastrar</button>
+</form>
