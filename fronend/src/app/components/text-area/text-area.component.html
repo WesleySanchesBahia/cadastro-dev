@@ -1,0 +1,12 @@
+<div class="container-textarea">
+  <label for="">{{label}}</label>
+  <textarea class="form-control"
+  #textArea
+  [(ngModel)]="value"
+  [readOnly]="readOnly"
+  [placeholder]="placeholder"
+  (input)="onChange(textArea.value)" (blur)="onTouch()"
+  >
+
+  </textarea>
+</div>

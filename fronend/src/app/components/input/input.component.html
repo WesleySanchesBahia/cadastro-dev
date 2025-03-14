@@ -1,0 +1,17 @@
+<div class="container-input">
+  <label for="{{label}}">{{label}}</label>
+  <input
+  [style]="style"
+  #input
+  id="{{label}}"
+  class="input"
+  placeholder=""
+  [type]="type"
+  autocomplete="off"
+  [(ngModel)]="value"
+  [readOnly]="readOnly"
+  (input)="onChange(input.value || null)"
+  title="{{label}}"
+  (blur)="onTouch()">
+</div>
+
