@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-form-user',
@@ -13,21 +15,27 @@ export class FormUserComponent {
   gitUrl:string = "https://api.github.com/users/";
 
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private alert: AlertService) {
     this.userForm = this.formBuilder.group({
       githubUsername: ['', Validators.required],
-      avatarUrl: [''],
+      avatarUrl: ['', Validators.required],
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      city: [''],
-      education: [''],
-      technologies: [''],
+      city: ['', Validators.required],
+      education: ['', Validators.required],
+      technologies: ['', Validators.required],
     })
+
   }
 
 
   buscarUserGitHub(): void {
     const username = this.userForm.value.githubUsername;
+
+    if(!username){
+      this.alert.showInfo("Informe seu nome de usuário do GitHub para preencher o formulário automaticamente.");
+      return;
+    }
     if (username) {
       this.http.get<any>(`${this.gitUrl}${username}`).subscribe((data) => {
         this.userForm.patchValue({
@@ -46,7 +54,11 @@ export class FormUserComponent {
     }
 
     if (this.userForm.valid) {
-      console.log('Novo Desenvolvedor:', this.userForm.value);
+      setTimeout(() => {
+        this.alert.showSuccess("Cadastro realizado com sucesso!");
+        this.userForm.reset();
+      }, 500);
+
     }
   }
 }

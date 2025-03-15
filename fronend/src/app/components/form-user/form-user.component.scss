@@ -22,7 +22,7 @@ form {
 
 
   background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 8px #00000066;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -70,6 +70,10 @@ form {
     font-size: 16px;
     background-color: #38A169;
     font-weight: 500;
+    margin-top: 1rem 0rem 0rem;
+    :hover{
+      cursor: pointer;
+    }
   }
 
 
