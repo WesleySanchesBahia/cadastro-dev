@@ -13,18 +13,18 @@ export class AlertService {
     toastr.toastrConfig.progressBar = true;
   }
 
-  showInfo(message: string, title: string = 'Info') {
-    this.toastr.info(message, title);
+  showInfo(message: string, ) {
+    this.toastr.info(message);
   }
-  showError(message: string, title: string = 'Erro') {
-    this.toastr.error(message, title);
-  }
-
-  showSuccess(message: string, title: string = 'Sucesso') {
-    this.toastr.success(message, title);
+  showError(message: string, ) {
+    this.toastr.error(message);
   }
 
-  showWarning(message: string, title: string = 'Atenção') {
-    this.toastr.warning(message, title);
+  showSuccess(message: string, ) {
+    this.toastr.success(message);
+  }
+
+  showWarning(message: string,) {
+    this.toastr.warning(message);
   }
 }
