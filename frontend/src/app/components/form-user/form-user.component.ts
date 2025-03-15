@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AlertService } from '../../services/alert.service';
@@ -14,15 +14,16 @@ export class FormUserComponent {
   userForm!: FormGroup;
   gitUrl:string = "https://api.github.com/users/";
 
+  @Output() userEmitter = new EventEmitter();
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private alert: AlertService) {
     this.userForm = this.formBuilder.group({
-      githubUsername: ['', Validators.required],
-      avatarUrl: ['', Validators.required],
+      githubUsername: [''],
+      avatarUrl: [''],
       name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: [''],
       city: ['', Validators.required],
-      education: ['', Validators.required],
+      education: [''],
       technologies: ['', Validators.required],
     })
 
@@ -55,6 +56,7 @@ export class FormUserComponent {
 
     if (this.userForm.valid) {
       setTimeout(() => {
+        this.userEmitter.emit(this.userForm.value);
         this.alert.showSuccess("Cadastro realizado com sucesso!");
         this.userForm.reset();
       }, 500);

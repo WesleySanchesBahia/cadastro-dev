@@ -1,20 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { User } from '../../types/types-user';
 
-type Users = {
-  githubUsername:string,
-  avatarUrl:string,
-  name:string,
-  city:string,
-  technologies:string;
-}
+
 @Component({
   selector: 'app-card',
   standalone: false,
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss'
 })
-export class CardComponent {
-  users:Array<Users> = [
+export class CardComponent  implements OnInit {
+  @Input() dataUsers:Array<User> =[];
+
+  users:Array<User> = [
 
   ];
+  ngOnInit(): void {
+    this.users = this.dataUsers;
+  }
 }

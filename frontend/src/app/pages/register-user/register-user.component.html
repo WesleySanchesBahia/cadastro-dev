@@ -1,3 +1,3 @@
 <app-header></app-header>
-<app-form-user></app-form-user>
-<app-card></app-card>
+<app-form-user (userEmitter)="getUsers($event)"></app-form-user>
+<app-card [dataUsers]="users"></app-card>
