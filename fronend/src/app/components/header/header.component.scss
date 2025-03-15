@@ -36,9 +36,9 @@ header{
   border-width: 1px;
 
   background: #2D3748;
-
   display: flex;
   align-items:center;
+  transition: box-shadow 0.3s ease-out;
 
   input{
     background-color: transparent;
@@ -47,10 +47,16 @@ header{
     border: none;
     color: #ffff;
     padding-left: 0.2rem;
+
+
   }
 
-  .bi-search{
+  .icon{
     margin: 0.5rem;
     color: #718096;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.1rem rgba(0, 0, 0, 0.30);
   }
 }

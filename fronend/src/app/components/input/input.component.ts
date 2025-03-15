@@ -24,7 +24,7 @@ export class InputComponent implements ControlValueAccessor{
   @Input() id: string = "input";
   @Input() type: any;
   @Input() readOnly: boolean = false;
-  style: string = "";
+  @Input() style = {};
   @Input() width: string = "";
   @Output() valueInput:EventEmitter<string> = new EventEmitter<string>();
 

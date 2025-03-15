@@ -34,6 +34,8 @@ form {
 
   hr{
     margin: 1rem 0px 1rem 0px ;
+    color: #E2E8F0;
+    opacity: 0.5;
   }
   h2{
     text-align: center;
@@ -41,27 +43,33 @@ form {
 
   #button-get-user{
     height: 42px;
-    top: 108px;
-    left: 212px;
     border: 1.8px solid #a0aec0;
     background-color: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.3rem;
-
-
+    transition: background-color 0.3s ease-out;
     &:hover{
       cursor: pointer;
+      box-shadow: 0 0 0 0.1rem rgba(0, 0, 0, 0.30);
     }
 
     #icon{
       width: 19.5px;
       height: 21.03px;
     }
-    &:focus(){
-      box-shadow: 0 0 0 0.1rem rgba(0, 0, 0, 0.30);
-    }
+
+  }
+
+
+  #button-submit{
+    height: 42px;
+    border: 1.8px solid #a0aec0;
+    background-color: transparent;
+    font-size: 16px;
+    background-color: #38A169;
+    font-weight: 500;
   }
 
 
