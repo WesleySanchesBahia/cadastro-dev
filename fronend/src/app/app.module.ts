@@ -12,6 +12,7 @@ import { RegisterUserComponent } from './pages/register-user/register-user.compo
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './components/header/header.component';
 import { TextAreaComponent } from './components/text-area/text-area.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { TextAreaComponent } from './components/text-area/text-area.component';
     InputComponent,
     RegisterUserComponent,
     HeaderComponent,
-    TextAreaComponent
+    TextAreaComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

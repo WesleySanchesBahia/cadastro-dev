@@ -2,22 +2,22 @@
   <div class="content">
     <div class="card-container" *ngFor="let user of users">
       <div class="logo">
-        <img [src]="user.avatarUrl" alt="Foto de {{ user.name }}" />
+        <img [src]="user.avatarUrl " alt="Foto de {{ user.name }}" />
       </div>
       <div class="card">
         <div class="description">
           <h3>{{ user.name }}</h3>
           <p>{{ user.city }}</p>
           <p>{{ user.technologies }}</p>
-          <div>
+          <div  class="options">
             <a [href]="'https://github.com/' + user.githubUsername" target="_blank"
               >Acessar GitHub</a
             >
             <div class="options-icons">
-              <span class="material-symbols-outlined">
+              <span class="material-symbols-outlined ">
                 edit_square
                 </span>
-                <span class="material-symbols-outlined">
+                <span class="material-symbols-outlined ">
                   delete
                 </span>
             </div>

@@ -12,15 +12,15 @@
 
     <hr width="100%">
 
-    <app-input label="Avatar (URL)" formControlName="avatarUrl"></app-input>
-    <app-input label="Nome" formControlName="name"></app-input>
-    <app-input label="Email" formControlName="email"></app-input>
-    <app-input label="Cidade" formControlName="city"></app-input>
+    <app-input label="Avatar (URL) *" formControlName="avatarUrl"></app-input>
+    <app-input label="Nome *" formControlName="name"></app-input>
+    <app-input label="Email*" formControlName="email"></app-input>
+    <app-input label="Cidade *" formControlName="city"></app-input>
 
     <hr width="100%">
     <H2>PROFISSIONAL</H2>
-    <app-input label="Formação" formControlName="education"></app-input>
-    <app-text-area label="Tecnologia" formControlName="technologies" placeholder="ex: HTML/CSS, Vue, Angular etc."></app-text-area>
+    <app-input label="Formação *" formControlName="education"></app-input>
+    <app-text-area label="Tecnologia *" formControlName="technologies" placeholder="ex: HTML/CSS, Vue, Angular etc."></app-text-area>
 
     <button id="button-submit" type="submit" [disabled]="userForm.invalid">Cadastrar</button>
   </form>
