@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { User } from '../../types/types-user';
+import { CardComponent } from '../../components/card/card.component';
 
 @Component({
   selector: 'app-register-user',
@@ -8,11 +9,16 @@ import { User } from '../../types/types-user';
   styleUrl: './register-user.component.scss'
 })
 export class RegisterUserComponent {
+  @ViewChild("Appcard") card!: CardComponent;
   users:Array<User> =[];
 
 
 
-  getUsers(data:User): void {
-    this.users.push(data);
+  setUsers(user:User): void {
+   this.card.setUsers(user);
+  }
+
+  getUsers(userName:string): void{
+    this.card.searchUsers(userName);
   }
 }

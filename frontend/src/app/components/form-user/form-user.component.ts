@@ -1,22 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-form-user',
   standalone: false,
   templateUrl: './form-user.component.html',
-  styleUrl: './form-user.component.scss'
+  styleUrl: './form-user.component.scss',
 })
 export class FormUserComponent {
   userForm!: FormGroup;
-  gitUrl:string = "https://api.github.com/users/";
-
+  private gitUrl: string = 'https://api.github.com/users/';
+  loader: boolean = false;
   @Output() userEmitter = new EventEmitter();
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private alert: AlertService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private http: HttpClient,
+    private alert: AlertService
+  ) {
     this.userForm = this.formBuilder.group({
       githubUsername: [''],
       avatarUrl: [''],
@@ -25,42 +28,51 @@ export class FormUserComponent {
       city: ['', Validators.required],
       education: [''],
       technologies: ['', Validators.required],
-    })
-
+    });
   }
-
 
   buscarUserGitHub(): void {
     const username = this.userForm.value.githubUsername;
 
-    if(!username){
-      this.alert.showInfo("Informe seu nome de usuário do GitHub para preencher o formulário automaticamente.");
+    if (!username) {
+      this.alert.showInfo('Informe o GitHub para preencher o formulário.');
       return;
     }
+
     if (username) {
-      this.http.get<any>(`${this.gitUrl}${username}`).subscribe((data) => {
-        this.userForm.patchValue({
-          avatarUrl: data.avatar_url,
-          name: data.name || '',
-          email: data.email || '',
-          city: data.location || '',
-        });
+      this.http.get<any>(`${this.gitUrl}${username}`).subscribe({
+        next: (data) => {
+          if (!data) {
+            this.alert.showInfo('GitHub não encontrado.');
+            return;
+          }
+          this.userForm.patchValue({
+            avatarUrl: data.avatar_url,
+            name: data.name || '',
+            email: data.email || '',
+            city: data.location || '',
+          });
+        },
+        error:() =>{
+          this.alert.showError("Usuário não encontrado");
+        }
       });
     }
   }
 
   submit(): void {
-    if(!this.userForm.valid){
-      return console.log("Erro em criar Novo Desenvolvedor")
-    }
-
     if (this.userForm.valid) {
+      this.loader = true;
       setTimeout(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+        this.loader = false;
+        this.alert.showSuccess('Cadastro realizado com sucesso!');
         this.userEmitter.emit(this.userForm.value);
-        this.alert.showSuccess("Cadastro realizado com sucesso!");
         this.userForm.reset();
-      }, 500);
-
+      }, 1500);
     }
   }
 }

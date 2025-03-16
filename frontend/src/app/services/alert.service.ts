@@ -9,7 +9,7 @@ export class AlertService {
   constructor(private toastr: ToastrService) {
     toastr.toastrConfig.positionClass = "toast-bottom-right";
     toastr.toastrConfig.closeButton = true;
-    toastr.toastrConfig.timeOut = 5000;
+    toastr.toastrConfig.timeOut = 3000;
     toastr.toastrConfig.progressBar = true;
   }
 

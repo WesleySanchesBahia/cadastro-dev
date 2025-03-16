@@ -3,8 +3,8 @@
     <div id="rectangle"></div>
     <h1>Cadastro DEV</h1>
   </div>
-  <div id="pesquisa">
-    <input type="text" />
-    <span class="material-symbols-outlined icon"> search </span>
-  </div>
+  <form [formGroup]="form" id="pesquisa">
+    <input type="text" formControlName="search" placeholder="Pesquisar Dev" />
+    <span class="material-symbols-outlined icon" (click)="getUser()" title="Pesquisar"> search </span>
+  </form>
 </header>
