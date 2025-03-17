@@ -3,7 +3,7 @@
   <div class="content">
     <div class="card-container" *ngFor="let user of dataBaseUsers; let i = index">
       <div class="logo">
-        <img [src]="!user.avatarUrl ? 'assets/images/profile-default.jpeg':user.avatarUrl" alt="Foto de {{ user.name }}" />
+        <img [src]="!user.avatarUrl ? 'assets/images/profile-default.jpeg':user.avatarUrl" alt="Foto de {{ user.name }}" loading="lazy" />
       </div>
       <div class="card">
         <div class="description">

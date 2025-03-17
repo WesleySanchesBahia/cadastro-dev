@@ -34,18 +34,17 @@ export class CardComponent  implements OnInit {
   private isLoader = signal(false);
   loader = () => this.isLoader();
   ngOnInit(): void {
-
+    this.dataBaseUsers =  this.getDataBaseLocal();
   }
 
   private updateLocalStorage(dataBase:Array<User>): void{
     localStorage.setItem("dataBase",JSON.stringify(dataBase));
+    this.dataBaseUsers = this.getDataBaseLocal();
   }
 
   private getDataBaseLocal(): Array<User>{
     let database =  localStorage.getItem("dataBase")  || "";
-    this.dataBaseUsers = JSON.parse(database);
-
-    return this.dataBaseUsers;
+    return JSON.parse(database);
   }
 
   setUsers(user:User): void {
@@ -55,7 +54,7 @@ export class CardComponent  implements OnInit {
   }
 
   searchUsers(nameUser:string): void{
-    this.getDataBaseLocal();
+    this.dataBaseUsers = this.getDataBaseLocal();
     if(!nameUser){
       return;
     }
