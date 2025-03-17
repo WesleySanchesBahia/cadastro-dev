@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, viewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, signal, ViewChild, viewChild } from '@angular/core';
 import { User } from '../../types/types-user';
 import { AlertService } from '../../services/alert.service';
 import { ModalService } from '../../services/modal.service';
@@ -31,6 +31,8 @@ export class CardComponent  implements OnInit {
   dataBaseUsers:Array<User> = [];
   formEdit: FormGroup;
   configModal!:config;
+  private isLoader = signal(false);
+  loader = () => this.isLoader();
   ngOnInit(): void {
 
   }
@@ -102,16 +104,19 @@ export class CardComponent  implements OnInit {
   }
 
   save():void{
+    this.isLoader.set(true);
     const id = this.formEdit.value.id;
     const users = this.getDataBaseLocal();
     const index = users.findIndex(user => user.id === id);
     if (index !== -1) {
       users[index] = { ...users[index], ...this.formEdit.value };
     }
-
-    this.alert.showSuccess("Atualizado com sucesso.")
-    this.updateLocalStorage(users);
-    this.modal.close();
+    setTimeout(() => {
+      this.modal.close();
+      this.isLoader.set(false);
+      this.alert.showSuccess("Atualizado com sucesso.")
+      this.updateLocalStorage(users);
+    }, 1500);
   }
 
 

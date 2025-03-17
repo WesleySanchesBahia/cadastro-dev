@@ -1,4 +1,4 @@
-<app-loader *ngIf="false"></app-loader>
+<app-loader *ngIf="loader()"></app-loader>
 <div id="card-user" >
   <div class="content">
     <div class="card-container" *ngFor="let user of dataBaseUsers; let i = index">
@@ -15,7 +15,7 @@
               title="Acessar GitHub">Acessar GitHub</a
             >
             <div class="options-icons">
-              <span class="material-symbols-outlined" title="Editar" (click)="editUser(user)">
+              <span class="material-symbols-outlined" title="Editar"  (click)="editUser(user)">
                 edit_square
                 </span>
                 <span class="material-symbols-outlined" (click)="deleteUser(i)" title="Deletar">
@@ -40,7 +40,7 @@
 
     <div class="container-buttons">
       <button  id="button-close" (click)="close()">Fechar</button>
-      <button id="button-save" (click)="save()">Alterar</button>
+      <button id="button-save"  (click)="save()" [disabled]="formEdit.invalid">Alterar</button>
       </div>
   </form>
 </ng-template>

@@ -24,7 +24,7 @@ import { config } from '../../types/types-modal';
 .container-modal {
   display: flex;
   position: fixed;
-  z-index: 5;
+  z-index: 1;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
@@ -60,6 +60,7 @@ import { config } from '../../types/types-modal';
     p {
     font-size: 18px;
     font-weight: 700;
+    padding:0.5rem;
 }
   }
 }
