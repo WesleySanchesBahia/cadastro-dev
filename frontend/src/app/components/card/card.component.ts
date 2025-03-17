@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, viewChild } from '@angular/core';
 import { User } from '../../types/types-user';
 import { AlertService } from '../../services/alert.service';
+import { ModalService } from '../../services/modal.service';
 
 
 @Component({
@@ -10,10 +11,10 @@ import { AlertService } from '../../services/alert.service';
   styleUrl: './card.component.scss'
 })
 export class CardComponent  implements OnInit {
-
+  @ViewChild('ContentOfModalUser') contentOfModalUser!: ElementRef<any>
   dataBaseUsers:Array<User> = [];
 
-  constructor(private alert:AlertService){}
+  constructor(private alert:AlertService, private modal: ModalService){}
 
 
 
@@ -21,28 +22,37 @@ export class CardComponent  implements OnInit {
 
   }
 
-  setUsers(user:User): void {
-    this.dataBaseUsers.push(user);
-    this.setUserLocalStorage(this.dataBaseUsers);
-  }
-
-
-  private setUserLocalStorage(dataBase:Array<User>): void{
+  private updateLocalStorage(dataBase:Array<User>): void{
     localStorage.setItem("dataBase",JSON.stringify(dataBase));
   }
 
+  private getDataBaseLocal(): Array<User>{
+    let database =  localStorage.getItem("dataBase")  || "";
+    this.dataBaseUsers = JSON.parse(database);
 
-   deleteUser(index:number): void {
+    return this.dataBaseUsers;
+  }
+
+  setUsers(user:User): void {
+    this.dataBaseUsers.push(user);
+    this.updateLocalStorage(this.dataBaseUsers);
+  }
+
+
+  editUser(): void {
+    this.modal.open();
+  }
+
+  deleteUser(index:number): void {
     if(index !== -1){
       this.dataBaseUsers.splice(index,1);
     }
-    this.setUserLocalStorage(this.dataBaseUsers);
+    this.updateLocalStorage(this.dataBaseUsers);
   }
 
   searchUsers(nameUser:string): void{
+    this.getDataBaseLocal();
     if(!nameUser){
-      let database =  localStorage.getItem("dataBase")  || "";
-      this.dataBaseUsers = JSON.parse(database);
       return;
     }
     let name = nameUser.toUpperCase();
@@ -52,6 +62,7 @@ export class CardComponent  implements OnInit {
     }
     this.dataBaseUsers = user || [];
   }
+
 
 
 

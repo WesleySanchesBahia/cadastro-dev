@@ -1,4 +1,4 @@
-<app-loader *ngIf="loader"></app-loader>
+<app-loader *ngIf="loader()"></app-loader>
 <div class="container-form">
   <form [formGroup]="userForm" (ngSubmit)="submit()">
     <button id="button-get-user" type="button" (click)="buscarUserGitHub()">
@@ -23,6 +23,6 @@
     <app-input label="Formação " formControlName="education"></app-input>
     <app-text-area label="Tecnologia *" formControlName="technologies" placeholder="ex: HTML/CSS, Vue, Angular etc."></app-text-area>
 
-    <button id="button-submit" type="submit"  [disabled]="userForm.invalid|| loader">Cadastrar</button>
+    <button id="button-submit" type="submit"  [disabled]="userForm.invalid|| loader()">Cadastrar</button>
   </form>
 </div>

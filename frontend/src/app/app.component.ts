@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { ModalComponent } from './components/modal/modal.component';
+import { ModalService } from './services/modal.service';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +8,12 @@ import { Component } from '@angular/core';
   standalone: false,
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
-  title = 'fronend';
+export class AppComponent  implements AfterViewInit{
+  @ViewChild(ModalComponent) modalComponent!:ModalComponent;
+  title = 'frontend';
+
+  constructor(private modal: ModalService){}
+ngAfterViewInit(): void {
+  this.modal.setModal(this.modalComponent);
+}
 }

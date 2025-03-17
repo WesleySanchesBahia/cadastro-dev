@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from '../../services/alert.service';
 
@@ -12,7 +12,8 @@ import { AlertService } from '../../services/alert.service';
 export class FormUserComponent {
   userForm!: FormGroup;
   private gitUrl: string = 'https://api.github.com/users/';
-  loader: boolean = false;
+  private isLoader = signal(false);
+  loader = () => this.isLoader();
   @Output() userEmitter = new EventEmitter();
 
   constructor(
@@ -62,13 +63,13 @@ export class FormUserComponent {
 
   submit(): void {
     if (this.userForm.valid) {
-      this.loader = true;
+      this.isLoader.set(true);
       setTimeout(() => {
         window.scrollTo({
           top: 0,
           behavior: 'smooth',
         });
-        this.loader = false;
+        this.isLoader.set(false);
         this.alert.showSuccess('Cadastro realizado com sucesso!');
         this.userEmitter.emit(this.userForm.value);
         this.userForm.reset();

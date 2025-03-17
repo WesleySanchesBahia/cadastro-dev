@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { FormUserComponent } from './components/form-user/form-user.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CardComponent } from './components/card/card.component';
-import { ListComponent } from './components/list/list.component';
 import { InputComponent } from './components/input/input.component';
 import { RegisterUserComponent } from './pages/register-user/register-user.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -15,18 +14,19 @@ import { TextAreaComponent } from './components/text-area/text-area.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FormUserComponent,
     CardComponent,
-    ListComponent,
     InputComponent,
     RegisterUserComponent,
     HeaderComponent,
     TextAreaComponent,
-    LoaderComponent
+    LoaderComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

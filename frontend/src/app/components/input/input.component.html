@@ -9,7 +9,6 @@
   [type]="type"
   autocomplete="off"
   [(ngModel)]="value"
-  [readOnly]="readOnly"
   (input)="onChange(input.value || null)"
   title="{{label}}"
   (blur)="onTouch()">

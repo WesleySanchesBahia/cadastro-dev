@@ -23,20 +23,16 @@ export class InputComponent implements ControlValueAccessor{
   @Input() label: string = "Nome Input";
   @Input() id: string = "input";
   @Input() type: any;
-  @Input() readOnly: boolean = false;
   @Input() style = {};
   @Input() width: string = "";
-  @Output() valueInput:EventEmitter<string> = new EventEmitter<string>();
 
   value: any = '';
   onChange: any = () => {
-    this.valueInput.emit(this.value);
   };
 
   onTouch: any = () => { };
 
   ngAfterViewInit(): void {
-    this.configurarStyle();
   }
   // Escreve um novo valor para o elemento.
   writeValue(value: any): void {
@@ -54,10 +50,6 @@ export class InputComponent implements ControlValueAccessor{
   setDisabledState?(isDisabled: boolean): void {
     // Implemente se necessário
   }
-  configurarStyle() {
-    if (this.width) {
-      this.style = "width:"+this.width+";"
-    }
-  }
+
 
 }
