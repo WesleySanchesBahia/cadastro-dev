@@ -15,7 +15,7 @@
               title="Acessar GitHub">Acessar GitHub</a
             >
             <div class="options-icons">
-              <span class="material-symbols-outlined" title="Editar" (click)="editUser()">
+              <span class="material-symbols-outlined" title="Editar" (click)="editUser(user)">
                 edit_square
                 </span>
                 <span class="material-symbols-outlined" (click)="deleteUser(i)" title="Deletar">
@@ -30,5 +30,17 @@
 </div>
 
 <ng-template #ContentOfModalUser>
+  <form id="form-card" [formGroup]="formEdit">
+    <app-input label="Avatar (URL) " formControlName="avatarUrl"></app-input>
+    <app-input label="Nome *" formControlName="name"></app-input>
+    <app-input label="Email" formControlName="email"></app-input>
+    <app-input label="Cidade *" formControlName="city"></app-input>
+    <app-input label="Formação " formControlName="education"></app-input>
+    <app-text-area label="Tecnologia *" formControlName="technologies" placeholder="ex: HTML/CSS, Vue, Angular etc."></app-text-area>
 
+    <div class="container-buttons">
+      <button  id="button-close" (click)="close()">Fechar</button>
+      <button id="button-save" (click)="save()">Alterar</button>
+      </div>
+  </form>
 </ng-template>

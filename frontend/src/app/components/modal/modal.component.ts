@@ -1,12 +1,6 @@
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
-interface config {
-  width: 'max-content' | 'min-content' | 'fit-content' | 'auto' | string,
-  maxWidth: "max-content" | "min-content" | "fit-content" | 'auto' | string,
-  minWidth: "max-content" | "min-content" | "fit-content" | 'auto' | string,
-  height: "max-content" | "min-content" | "fit-content" | 'auto' | string,
-  maxHeight: "max-content" | "min-content" | "fit-content" | 'auto' | string,
-  minHeight: "max-content" | "min-content" | "fit-content" | 'auto' | string,
-}
+import { config } from '../../types/types-modal';
+
 
 @Component({
   selector: 'app-modal',
@@ -16,15 +10,11 @@ interface config {
       <div id="modal">
         <div class="header-modal">
           <div class="title">
-            <p>{{ title }}</p>
+            <p>{{ configModal.title }}</p>
           </div>
         </div>
         <div class="content-modal">
-          <ng-container *ngTemplateOutlet="content"></ng-container>
-        </div>
-        <div class="container-buttons">
-        <button>Fechar</button>
-        <button>Salvar</button>
+          <ng-container *ngTemplateOutlet="configModal.content"></ng-container>
         </div>
       </div>
     </div>
@@ -79,18 +69,7 @@ interface config {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
   font-size: 18px;
-  margin-bottom: 1rem;
-}
-
-
-.container-buttons {
-  display: flex;
-  flex-direction: row;
-  width: 97%;
-  margin: 0.5rem;
-  gap: 0.5rem;
-  justify-content: flex-end;
-  margin-top: 4rem;
+  margin: 1rem;
 }
 
 .title {
@@ -103,21 +82,22 @@ interface config {
 })
 export class ModalComponent {
 
-  @Input() content!: any;
-  @Input() viewBtns = signal(false);
-  @Input() title: string = "título modal";
-  @Input() classPanel: string = "modal";
-  @Input()  disabled:boolean = false;
-  @Input()  releaseClose:boolean = true;
+  content!: any;
+  viewBtns = signal(false);
+  classPanel: string = "modal";
+  disabled:boolean = false;
+  releaseClose:boolean = true;
 
-  @Output() save: EventEmitter<any> = new EventEmitter();
-  @Output() EmitterClose: EventEmitter<any> = new EventEmitter();
+  @Output() saveEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() closeEmitter: EventEmitter<any> = new EventEmitter();
 
   private modal!: HTMLElement;
   private isOpenModal =  signal(false);
 
 
   configModal: config = {
+    title:null,
+    content:null,
     width: "800px",
     maxWidth: "",
     minWidth: "300px",
@@ -141,16 +121,24 @@ export class ModalComponent {
   }
 
 
-  clickSave(): void {
-    this.save.emit();
+  setConfigModal(config:config){
+    this.configModal = {
+      title: config.title,
+      content: config.content,
+      width:  config.width,
+      maxWidth:  config.maxWidth,
+      minWidth: config.minWidth,
+      height:  config.height,
+      maxHeight:  config.maxHeight,
+      minHeight: config.minHeight
+    }
   }
 
-  clickClose(): void {
-    this.EmitterClose.emit();
-    if(this.releaseClose){
-      this.isOpenModal.set(true);
-    }
 
+
+
+  closead(): void {
+      this.isOpenModal.set(true);
   }
 
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ModalComponent } from '../components/modal/modal.component';
+import { config } from '../types/types-modal';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,12 @@ export class ModalService {
     this.modalTemplate = modal;
   }
 
-  open(){
+
+  open(modalConfig:config){
+    this.modalTemplate.setConfigModal(modalConfig);
     this.modalTemplate.openModal();
   }
+
   close(){
     this.modalTemplate.closeModal();
   }

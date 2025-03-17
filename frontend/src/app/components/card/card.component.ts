@@ -2,6 +2,8 @@ import { Component, ElementRef, OnInit, ViewChild, viewChild } from '@angular/co
 import { User } from '../../types/types-user';
 import { AlertService } from '../../services/alert.service';
 import { ModalService } from '../../services/modal.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { config } from '../../types/types-modal';
 
 
 @Component({
@@ -12,12 +14,23 @@ import { ModalService } from '../../services/modal.service';
 })
 export class CardComponent  implements OnInit {
   @ViewChild('ContentOfModalUser') contentOfModalUser!: ElementRef<any>
+
+  constructor(private alert:AlertService, private modal: ModalService, private formBuilder:FormBuilder){
+    this.formEdit = this.formBuilder.group({
+      id: [''],
+      githubUsername: [''],
+      avatarUrl: [''],
+      name: ['', Validators.required],
+      email: [''],
+      city: ['', Validators.required],
+      education: [''],
+      technologies: ['', Validators.required],
+    });
+  }
+
   dataBaseUsers:Array<User> = [];
-
-  constructor(private alert:AlertService, private modal: ModalService){}
-
-
-
+  formEdit: FormGroup;
+  configModal!:config;
   ngOnInit(): void {
 
   }
@@ -34,19 +47,8 @@ export class CardComponent  implements OnInit {
   }
 
   setUsers(user:User): void {
+    user.id = crypto.randomUUID();
     this.dataBaseUsers.push(user);
-    this.updateLocalStorage(this.dataBaseUsers);
-  }
-
-
-  editUser(): void {
-    this.modal.open();
-  }
-
-  deleteUser(index:number): void {
-    if(index !== -1){
-      this.dataBaseUsers.splice(index,1);
-    }
     this.updateLocalStorage(this.dataBaseUsers);
   }
 
@@ -64,6 +66,53 @@ export class CardComponent  implements OnInit {
   }
 
 
+
+
+  editUser(user:User): void {
+    this.modal.open(
+      this.configModal ={
+        title:"Editar",
+        content:this.contentOfModalUser,
+        width: "400px",
+        maxWidth: "",
+        minWidth: "",
+        height: "",
+        maxHeight: "",
+        minHeight: "",
+      }
+    );
+
+    this.formEdit.setValue(user);
+  }
+
+
+  deleteUser(index:number): void {
+    if(index !== -1){
+      this.dataBaseUsers.splice(index,1);
+    }
+    this.updateLocalStorage(this.dataBaseUsers);
+  }
+
+
+
+
+
+  close(): void{
+    this.modal.close();
+  }
+
+  save():void{
+    const id = this.formEdit.value.id;
+    const users = this.getDataBaseLocal();
+    const index = users.findIndex(user => user.id === id);
+    if (index !== -1) {
+      users[index] = { ...users[index], ...this.formEdit.value };
+    }
+
+    this.alert.showSuccess("Atualizado com sucesso.")
+    this.updateLocalStorage(users);
+    this.modal.close();
+  }
 
 
 }
