@@ -108,11 +108,11 @@ export class CardComponent  implements OnInit {
     const id = this.formEdit.value.id;
     const users = this.getDataBaseLocal();
     const index = users.findIndex(user => user.id === id);
-    if (index !== -1) {
-      users[index] = { ...users[index], ...this.formEdit.value };
-    }
+    this.modal.close();
     setTimeout(() => {
-      this.modal.close();
+      if (index !== -1) {
+        users[index] = { ...users[index], ...this.formEdit.value };
+      }
       this.isLoader.set(false);
       this.alert.showSuccess("Atualizado com sucesso.")
       this.updateLocalStorage(users);
