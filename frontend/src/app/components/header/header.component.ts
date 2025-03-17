@@ -8,7 +8,7 @@ import { debounceTime } from 'rxjs';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent  {
   @Output() sendSearch = new EventEmitter<any>();
 
   form!:FormGroup;
@@ -18,12 +18,6 @@ export class HeaderComponent implements OnInit {
       search: [""],
     })
   }
-
-
-  ngOnInit(): void {
-  }
-
-
 
   getUser(): void{
     this.sendSearch.emit(this.form.get("search")?.value);

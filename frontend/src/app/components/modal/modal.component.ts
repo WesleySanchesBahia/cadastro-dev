@@ -88,10 +88,6 @@ export class ModalComponent {
   classPanel: string = "modal";
   disabled:boolean = false;
   releaseClose:boolean = true;
-
-  @Output() saveEmitter: EventEmitter<any> = new EventEmitter();
-  @Output() closeEmitter: EventEmitter<any> = new EventEmitter();
-
   private modal!: HTMLElement;
   private isOpenModal =  signal(false);
 
@@ -134,14 +130,5 @@ export class ModalComponent {
       minHeight: config.minHeight
     }
   }
-
-
-
-
-  closead(): void {
-      this.isOpenModal.set(true);
-  }
-
-
 
 }

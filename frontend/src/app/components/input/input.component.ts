@@ -26,7 +26,7 @@ export class InputComponent implements ControlValueAccessor{
   @Input() style = {};
   @Input() width: string = "";
 
-  value: any = '';
+  value: string = '';
   onChange: any = () => {
   };
 
@@ -34,11 +34,11 @@ export class InputComponent implements ControlValueAccessor{
 
   ngAfterViewInit(): void {
   }
-  // Escreve um novo valor para o elemento.
+
   writeValue(value: any): void {
     this.value = value;
-    // Remova as chamadas para onChange e onTouch daqui
   }
+
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
@@ -46,10 +46,5 @@ export class InputComponent implements ControlValueAccessor{
   registerOnTouched(fn: any): void {
     this.onTouch = fn;
   }
-
-  setDisabledState?(isDisabled: boolean): void {
-    // Implemente se necessário
-  }
-
 
 }

@@ -10,11 +10,6 @@ import { AlertService } from '../../services/alert.service';
   styleUrl: './form-user.component.scss',
 })
 export class FormUserComponent {
-  userForm!: FormGroup;
-  private gitUrl: string = 'https://api.github.com/users/';
-  private isLoader = signal(false);
-  loader = () => this.isLoader();
-  @Output() userEmitter = new EventEmitter();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,21 +27,25 @@ export class FormUserComponent {
     });
   }
 
+  userForm!: FormGroup;
+  private gitUrl: string = 'https://api.github.com/users/';
+  private isLoader = signal(false);
+  loader = () => this.isLoader();
+  @Output() userEmitter = new EventEmitter();
+
+
+
   buscarUserGitHub(): void {
     const username = this.userForm.value.githubUsername;
 
     if (!username) {
-      this.alert.showInfo('Informe o GitHub para preencher o formulário.');
+      this.alert.showInfo('Informe seu GitHub para preencher o formulário.');
       return;
     }
 
     if (username) {
       this.http.get<any>(`${this.gitUrl}${username}`).subscribe({
         next: (data) => {
-          if (!data) {
-            this.alert.showInfo('GitHub não encontrado.');
-            return;
-          }
           this.userForm.patchValue({
             avatarUrl: data.avatar_url,
             name: data.name || '',
