@@ -72,7 +72,9 @@ export class FormUserComponent {
         this.alert.showSuccess('Cadastro realizado com sucesso!');
         this.userEmitter.emit(this.userForm.value);
         this.userForm.reset();
+
       }, 1500);
     }
   }
+
 }

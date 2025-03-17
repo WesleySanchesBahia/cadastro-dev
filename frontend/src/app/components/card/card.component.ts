@@ -31,6 +31,7 @@ export class CardComponent  implements OnInit {
   dataBaseUsers:Array<User> = [];
   formEdit: FormGroup;
   configModal!:config;
+  nameSearch!:string;
   private isLoader = signal(false);
   loader = () => this.isLoader();
   ngOnInit(): void {
@@ -39,7 +40,6 @@ export class CardComponent  implements OnInit {
 
   private updateLocalStorage(dataBase:Array<User>): void{
     localStorage.setItem("dataBase",JSON.stringify(dataBase));
-    this.dataBaseUsers = this.getDataBaseLocal();
   }
 
   private getDataBaseLocal(): Array<User>{
@@ -54,8 +54,10 @@ export class CardComponent  implements OnInit {
   }
 
   searchUsers(nameUser:string): void{
+    this.nameSearch = nameUser;
     this.dataBaseUsers = this.getDataBaseLocal();
     if(!nameUser){
+      this.nameSearch = nameUser;
       return;
     }
     let name = nameUser.toUpperCase();
@@ -115,6 +117,7 @@ export class CardComponent  implements OnInit {
       this.isLoader.set(false);
       this.alert.showSuccess("Atualizado com sucesso.")
       this.updateLocalStorage(users);
+      this.searchUsers(this.nameSearch);
     }, 1500);
   }
 
