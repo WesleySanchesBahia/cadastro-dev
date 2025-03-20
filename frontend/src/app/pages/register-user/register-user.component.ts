@@ -14,8 +14,8 @@ export class RegisterUserComponent {
 
 
 
-  setUsers(user:User): void {
-   this.card.setUsers(user);
+  setUsers(): void {
+   this.card.getUsers();
   }
 
   getUsers(userName:string): void{

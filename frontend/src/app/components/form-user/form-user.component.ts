@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from '../../services/alert.service';
+import { DevService } from '../../services/dev.service';
 
 @Component({
   selector: 'app-form-user',
@@ -14,7 +15,8 @@ export class FormUserComponent {
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private alert: AlertService
+    private alert: AlertService,
+    private service: DevService
   ) {
     this.userForm = this.formBuilder.group({
       githubUsername: [''],
@@ -31,7 +33,7 @@ export class FormUserComponent {
   private gitUrl: string = 'https://api.github.com/users/';
   private isLoader = signal(false);
   loader = () => this.isLoader();
-  @Output() userEmitter = new EventEmitter();
+  @Output() registered = new EventEmitter<boolean>();
 
 
 
@@ -63,17 +65,25 @@ export class FormUserComponent {
   submit(): void {
     if (this.userForm.valid) {
       this.isLoader.set(true);
-      setTimeout(() => {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth',
-        });
-        this.isLoader.set(false);
-        this.alert.showSuccess('Cadastro realizado com sucesso!');
-        this.userEmitter.emit(this.userForm.value);
-        this.userForm.reset();
+      this.service.post(this.userForm.value).subscribe(
+        {
+          next:(res) => {
+            this.alert.showSuccess("Registrado com sucesso!")
+            this.userForm.reset();
+            this.registered.emit(true);
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth',
+            });
+          },
+          error:(error) => {
+            this.alert.showInfo("Erro ao criar resgistro!");
+          }
+        },
 
-      }, 1500);
+      ).add(() => {
+        this.isLoader.set(false);
+      })
     }
   }
 
