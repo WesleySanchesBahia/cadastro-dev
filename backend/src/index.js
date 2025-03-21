@@ -56,6 +56,7 @@ app.post("/dev", async (req, res) => {
             return res.status(201).json(newDev);
         }
     } catch (error) {
+        
         console.log("Error ao salvar User:", error)
     }
 
@@ -71,8 +72,9 @@ app.put("/dev/:id", async (req, res) => {
 /* 
     Para atualizar algum  dado 
 */
-app.delete("/dev:id", (req, res) => {
-    return res.status(200).json({title:"Hello world!!"});
+app.delete("/dev/:id", async (req, res) => {
+    await Dev.findByIdAndDelete(req.params.id);
+    return res.status(204).json(true);
 })
 
 

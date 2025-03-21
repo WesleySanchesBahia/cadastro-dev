@@ -50,10 +50,14 @@ export class CardComponent implements OnInit {
     this.getUsers();
   }
 
+  close(): void {
+    this.modal.close();
+  }
+
   getUsers(): void{
     this.service.get().subscribe({
       next:(res) => {
-        if(res.content){}
+        if(res.content)
         this.dataBaseUsers = res.content;
       },
       error:(e) => {
@@ -61,11 +65,6 @@ export class CardComponent implements OnInit {
       }
     })
   }
-
-  private updateLocalStorage(dataBase: Array<User>): void {
-    localStorage.setItem('dataBase', JSON.stringify(dataBase));
-  }
-
 
   searchUsers(nameUser: string): void {
     this.nameSearch = nameUser;
@@ -76,7 +75,7 @@ export class CardComponent implements OnInit {
     }
     this.service.getByParams({name:this.nameSearch}).subscribe({
       next:(dev)=>{
-        this.dataBaseUsers = dev.content
+        this.dataBaseUsers = dev.content;
       },
       error:() => {
         this.alert.showError("Erro ao realizar essa ação!")
@@ -101,16 +100,6 @@ export class CardComponent implements OnInit {
     this.formEdit.patchValue(user);
   }
 
-  deleteUser(index: number): void {
-    if (index !== -1) {
-      this.dataBaseUsers.splice(index, 1);
-    }
-    this.updateLocalStorage(this.dataBaseUsers);
-  }
-
-  close(): void {
-    this.modal.close();
-  }
 
   updateDev(): void {
     this.isLoader.set(true);
@@ -131,5 +120,23 @@ export class CardComponent implements OnInit {
       this.isLoader.set(false);
     })
 
+  }
+
+  deleteUser(user: User): void {
+    this.isLoader.set(true);
+    if(user._id)
+    this.service.delete(user._id).subscribe(
+      {
+        next:(e) => {
+          this.alert.showError("Deletado com sucesso!");
+          this.searchUsers(this.nameSearch);
+        },
+        error:() => {
+          this.alert.showError("Erro ao realizar essa ação!")
+        }
+      }
+    ).add(() => {
+      this.isLoader.set(false);
+    })
   }
 }

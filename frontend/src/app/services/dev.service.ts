@@ -39,7 +39,7 @@ export class DevService {
   }
 
   post(dev:User):Observable<boolean>{
-    return this.http.post<boolean>(this.url, dev).pipe(map(() => {
+    return this.http.post<any>(this.url, dev).pipe(map(() => {
       return true;
     }),catchError(this.handleError)
   )
@@ -47,8 +47,14 @@ export class DevService {
 
 
   put(user:User):Observable<boolean> {
-    return this.http.put<User>(`${this.url}/${user._id}`, user).pipe(map(user => {
+    return this.http.put<any>(`${this.url}/${user._id}`, user).pipe(map(() => {
       return true;
     }),catchError(this.handleError))
+  }
+
+  delete(id:string):Observable<boolean>{
+    return this.http.delete<any>(`${this.url}/${id}`).pipe(map(() => {
+      return true;
+    }), catchError(this.handleError))
   }
 }
