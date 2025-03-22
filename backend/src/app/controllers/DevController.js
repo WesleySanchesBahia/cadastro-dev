@@ -1,9 +1,7 @@
-
-
 import Dev from "../models/Dev.js";
 
 
-class controllerDev {
+class DevController {
 
     async list(req, res) {
         try {
@@ -34,21 +32,28 @@ class controllerDev {
                 return res.status(201).json(newDev);
             }
         } catch (error) {
-            
-            console.log("Error ao salvar User:", error)
+            return res.status(500).json({error:error})
         }
     }
 
     async update(req, res) {
-        const id = req.params.id;
-        await Dev.findByIdAndUpdate(id, req.body)
-        return res.status(200).json(true);
+        try {
+            const id = req.params.id;
+            const dev = await Dev.findByIdAndUpdate(id, req.body)
+            return res.status(200).json(dev);
+        } catch (erro) {
+            return res.status(500).json({error:erro})
+        }
     }
 
     async  delete(req, res) {
-        await Dev.findByIdAndDelete(req.params.id);
-        return res.status(204).json(true);
+        try {
+            await Dev.findByIdAndDelete(req.params.id);
+            return res.status(204)
+        } catch (erro) {
+            return res.status(500).json({error:erro});
+        }
     }
 }
 
-export default new controllerDev();
+export default new DevController();
