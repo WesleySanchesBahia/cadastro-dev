@@ -13,12 +13,11 @@ export class RegisterUserComponent {
   users:Array<User> =[];
 
 
-
-  setUsers(): void {
+  getAllUsers(): void {
    this.card.getUsers();
   }
 
-  getUsers(userName:string): void{
+  search(userName:string): void{
     this.card.searchUsers(userName);
   }
 }

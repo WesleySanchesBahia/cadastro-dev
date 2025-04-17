@@ -2,17 +2,22 @@ import express from "express";
 import routes from "./routes/routes.js";
 import cors from "cors";
 
+const corsOptions = {
+    origin: 'http://localhost:4200',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  }
 class App {
     constructor(){
         this.server = express();
-        this.routes();
         this.middlewares();
+        this.routes();
     }
 
 
     middlewares(){
-        this.server.use(cors());
+        this.server.use(cors(corsOptions));
         this.server.use(express.json());
+        this.server.use(express.urlencoded({extended: false}))
     }
 
 
