@@ -16,7 +16,7 @@ export class FormUserComponent {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private alert: AlertService,
-    private service: DevService
+    private service: DevService,
   ) {
     this.userForm = this.formBuilder.group({
       githubUsername: [''],

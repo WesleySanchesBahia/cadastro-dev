@@ -1,4 +1,4 @@
-export type User = {
+export type Dev = {
   _id?:string,
   githubUsername?:string,
   avatarUrl:string,

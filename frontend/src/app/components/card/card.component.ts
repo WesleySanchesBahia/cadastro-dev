@@ -5,12 +5,13 @@ import {
   signal,
   ViewChild,
 } from '@angular/core';
-import { User } from '../../types/types-user';
+import { Dev } from '../../types/types-dev';
 import { AlertService } from '../../services/alert.service';
 import { ModalService } from '../../services/modal.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { config } from '../../types/types-modal';
 import { DevService } from '../../services/dev.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-card',
@@ -20,12 +21,12 @@ import { DevService } from '../../services/dev.service';
 })
 export class CardComponent implements OnInit {
   @ViewChild('ContentOfModalUser') contentOfModalUser!: ElementRef<any>;
-
+  users$!: Observable<Dev[]>
   constructor(
     private alert: AlertService,
     private modal: ModalService,
     private formBuilder: FormBuilder,
-    private service: DevService
+    private service: DevService,
   ) {
     this.formEdit = this.formBuilder.group({
       _id: [''],
@@ -37,9 +38,11 @@ export class CardComponent implements OnInit {
       education: [''],
       technologies: ['', Validators.required],
     });
+
+
   }
 
-  dataBaseUsers: Array<User> = [];
+  dataBaseUsers: Array<Dev> = [];
   formEdit: FormGroup;
   configModal!: config;
   nameSearch!: string;
@@ -83,7 +86,7 @@ export class CardComponent implements OnInit {
     })
   }
 
-  editUser(user: User): void {
+  editUser(dev: Dev): void {
     this.modal.open(
       (this.configModal = {
         title: 'Editar',
@@ -97,7 +100,7 @@ export class CardComponent implements OnInit {
       })
     );
 
-    this.formEdit.patchValue(user);
+    this.formEdit.patchValue(dev);
   }
 
 
@@ -122,10 +125,10 @@ export class CardComponent implements OnInit {
 
   }
 
-  deleteUser(user: User): void {
+  deleteUser(dev: Dev): void {
     this.isLoader.set(true);
-    if(user._id)
-    this.service.delete(user._id).subscribe(
+    if(dev._id)
+    this.service.delete(dev._id).subscribe(
       {
         next:(e) => {
           this.alert.showError("Deletado com sucesso!");

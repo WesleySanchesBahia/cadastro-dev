@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { User } from '../types/types-user';
+import { Dev } from '../types/types-dev';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +38,7 @@ export class DevService {
   )
   }
 
-  post(dev:User):Observable<boolean>{
+  post(dev:Dev):Observable<boolean>{
     return this.http.post<any>(this.url, dev).pipe(map(() => {
       return true;
     }),catchError(this.handleError)
@@ -46,8 +46,8 @@ export class DevService {
   }
 
 
-  put(user:User):Observable<boolean> {
-    return this.http.put<any>(`${this.url}/${user._id}`, user).pipe(map(() => {
+  put(dev:Dev):Observable<boolean> {
+    return this.http.put<any>(`${this.url}/${dev._id}`, dev).pipe(map(() => {
       return true;
     }),catchError(this.handleError))
   }

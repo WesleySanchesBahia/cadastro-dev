@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -19,7 +18,7 @@ export class HeaderComponent  {
     })
   }
 
-  getUser(): void{
+  searchDev(): void{
     this.sendSearch.emit(this.form.get("search")?.value);
   }
 }

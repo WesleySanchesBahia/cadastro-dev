@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { User } from '../../types/types-user';
+import { Dev } from '../../types/types-dev';
 import { CardComponent } from '../../components/card/card.component';
 
 @Component({
@@ -9,8 +9,13 @@ import { CardComponent } from '../../components/card/card.component';
   styleUrl: './register-user.component.scss'
 })
 export class RegisterUserComponent {
+
+  constructor(){
+
+  }
+
   @ViewChild("Appcard") card!: CardComponent;
-  users:Array<User> =[];
+  users:Array<Dev> =[];
 
 
   getAllUsers(): void {
