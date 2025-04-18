@@ -28,8 +28,9 @@ class DevController {
     async create(req,res) {
         try {
             if(req.body){
-                const newDev = await  Dev.create(req.body);
-                return res.status(201).json(newDev);
+                await  Dev.create(req.body);
+                const devs = await Dev.find();
+                return res.status(201).json(devs);
             }
         } catch (error) {
             return res.status(500).json({error:error})

@@ -1,6 +1,6 @@
-<app-loader *ngIf="loader()"></app-loader>
+<app-loader *ngIf="loader$ | async"></app-loader>
 <div class="container-form">
-  <form [formGroup]="userForm" (ngSubmit)="submit()">
+  <form [formGroup]="formDev" (ngSubmit)="submit()">
     <button id="button-get-user" type="button" (click)="buscarUserGitHub()">
       <img id="icon" src="assets/images/github.svg" alt="gitHub_img">
       Cadastrar com GitHub
@@ -23,6 +23,6 @@
     <app-input label="Formação " formControlName="education"></app-input>
     <app-text-area label="Tecnologia (Obrigatório)" formControlName="technologies" placeholder="ex: HTML/CSS, Vue, Angular etc."></app-text-area>
 
-    <button id="button-submit" type="submit"  [disabled]="userForm.invalid|| loader()">Cadastrar</button>
+    <button id="button-submit" type="submit"  [disabled]="formDev.invalid|| (loader$ | async)">Cadastrar</button>
   </form>
 </div>

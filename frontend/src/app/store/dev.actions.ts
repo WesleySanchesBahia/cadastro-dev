@@ -12,3 +12,9 @@ export const buscarDevsComErro = createAction('[Devs] Buscar Devs Erro',props<{ 
 export const buscarDevPorFiltro = createAction('[Devs] Buscar com filtro',props<{name:string}>());
 export const buscarDevPorFiltroComSucesso = createAction('[Devs] Buscar com filtro sucesso', props<{devs:Dev[]}>());
 export const buscarDevPorFiltroErro = createAction('[Devs] Buscar com filtro erro', props<{erro:any}>())
+
+
+// Ação para cadastrar novos dev
+export const cadastrarNovoDev = createAction('[Devs] Cadastrar novo dev', props<{novoDev:Dev}>());
+export const cadastrarNovoDevComSucesso = createAction('[Devs], Cadastrar novo dev com Sucesso', props<{devs:Dev[]}>());
+export const cadastrarNovoDevErro = createAction('[Devs] Cadastrar novo dev erro', props<{erro:string}>());

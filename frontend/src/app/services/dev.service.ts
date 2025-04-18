@@ -38,23 +38,23 @@ export class DevService {
   )
   }
 
-  post(dev:Dev):Observable<boolean>{
-    return this.http.post<any>(this.url, dev).pipe(map(() => {
-      return true;
+  post(dev:Dev):Observable<any>{
+    return this.http.post<any>(this.url, dev).pipe(map((res) => {
+      return  res;
     }),catchError(this.handleError)
   )
   }
 
 
-  put(dev:Dev):Observable<boolean> {
-    return this.http.put<any>(`${this.url}/${dev._id}`, dev).pipe(map(() => {
-      return true;
+  put(dev:Dev):Observable<any> {
+    return this.http.put<any>(`${this.url}/${dev._id}`, dev).pipe(map((res) => {
+      return res.content;
     }),catchError(this.handleError))
   }
 
-  delete(id:string):Observable<boolean>{
-    return this.http.delete<any>(`${this.url}/${id}`).pipe(map(() => {
-      return true;
+  delete(id:string):Observable<any>{
+    return this.http.delete<any>(`${this.url}/${id}`).pipe(map((res) => {
+      return res.content;
     }), catchError(this.handleError))
   }
 }
