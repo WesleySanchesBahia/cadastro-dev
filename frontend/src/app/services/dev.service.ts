@@ -24,7 +24,7 @@ export class DevService {
 
   get():Observable<any>{
     return this.http.get<any>(this.url, {}).pipe(map(res => {
-      return res;
+      return res.content;
     }),catchError(this.handleError)
   )
   }
@@ -33,7 +33,7 @@ export class DevService {
     return this.http.get<any>(`${this.url}/search`, {
       params:name
     }).pipe(map(res => {
-      return res;
+      return res.content;
     }),catchError(this.handleError)
   )
   }

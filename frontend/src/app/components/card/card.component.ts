@@ -2,16 +2,18 @@ import {
   Component,
   ElementRef,
   OnInit,
-  signal,
   ViewChild,
 } from '@angular/core';
-import { Dev } from '../../types/types-dev';
 import { AlertService } from '../../services/alert.service';
 import { ModalService } from '../../services/modal.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { config } from '../../types/types-modal';
 import { DevService } from '../../services/dev.service';
+import { EstadoDev } from '../../store/dev.states';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { config } from '../../types/types-modal';
+import { Dev } from '../../types/types-dev';
+import { buscarDevs } from '../../store/dev.actions';
 
 @Component({
   selector: 'app-card',
@@ -21,12 +23,14 @@ import { Observable } from 'rxjs';
 })
 export class CardComponent implements OnInit {
   @ViewChild('ContentOfModalUser') contentOfModalUser!: ElementRef<any>;
-  users$!: Observable<Dev[]>
+
   constructor(
     private alert: AlertService,
     private modal: ModalService,
     private formBuilder: FormBuilder,
     private service: DevService,
+
+    private store:Store<{dev:EstadoDev}>
   ) {
     this.formEdit = this.formBuilder.group({
       _id: [''],
@@ -40,17 +44,18 @@ export class CardComponent implements OnInit {
     });
 
 
+    this.dataBaseUsers$ = this.store.select((estado) => estado.dev.devs);
+    this.loader$ = this.store.select((estado) => estado.dev.carregando);
   }
+  dataBaseUsers$!: Observable<Dev[]>;
+  loader$!: Observable<boolean>;
 
-  dataBaseUsers: Array<Dev> = [];
   formEdit: FormGroup;
   configModal!: config;
   nameSearch!: string;
-  private isLoader = signal(false);
-  loader = () => this.isLoader();
 
   ngOnInit(): void {
-    this.getUsers();
+    this.store.dispatch(buscarDevs());
   }
 
   close(): void {
@@ -61,7 +66,7 @@ export class CardComponent implements OnInit {
     this.service.get().subscribe({
       next:(res) => {
         if(res.content)
-        this.dataBaseUsers = res.content;
+        this.dataBaseUsers$ = res.content;
       },
       error:(e) => {
 
@@ -78,7 +83,7 @@ export class CardComponent implements OnInit {
     }
     this.service.getByParams({name:this.nameSearch}).subscribe({
       next:(dev)=>{
-        this.dataBaseUsers = dev.content;
+        this.dataBaseUsers$ = dev.content;
       },
       error:() => {
         this.alert.showError("Erro ao realizar essa ação!")
@@ -105,7 +110,6 @@ export class CardComponent implements OnInit {
 
 
   updateDev(): void {
-    this.isLoader.set(true);
     this.service.put(this.formEdit.value).subscribe(
       {
         next:(e:boolean) => {
@@ -120,13 +124,11 @@ export class CardComponent implements OnInit {
         }
       }
     ).add(() => {
-      this.isLoader.set(false);
     })
 
   }
 
   deleteUser(dev: Dev): void {
-    this.isLoader.set(true);
     if(dev._id)
     this.service.delete(dev._id).subscribe(
       {
@@ -139,7 +141,6 @@ export class CardComponent implements OnInit {
         }
       }
     ).add(() => {
-      this.isLoader.set(false);
     })
   }
 }

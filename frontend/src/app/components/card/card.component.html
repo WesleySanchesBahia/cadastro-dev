@@ -1,7 +1,7 @@
-<app-loader *ngIf="loader()"></app-loader>
+<app-loader *ngIf="loader$ | async"></app-loader>
 <div id="card-user" >
   <div class="content">
-    <div class="card-container" *ngFor="let user of dataBaseUsers; let i = index">
+    <div class="card-container" *ngFor="let user of dataBaseUsers$ | async; let i = index">
       <div class="logo">
         <img [src]="!user.avatarUrl ? 'assets/images/profile-default.jpeg':user.avatarUrl" alt="Foto de {{ user.name }}" loading="lazy" />
       </div>
