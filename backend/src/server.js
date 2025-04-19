@@ -1,8 +1,11 @@
 import mongoose from "mongoose";
 import app from "./app.js";
-const PORT = 3000;
+import dotenv from 'dotenv';
+dotenv.config();
 
-mongoose.connect("mongodb://127.0.0.1:27017/DevDB", {
+const port = process.env.PORT || 3000;
+
+mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => {
@@ -13,8 +16,8 @@ mongoose.connect("mongodb://127.0.0.1:27017/DevDB", {
 
 
 
-app.listen(PORT, () => {
-    console.log(`App rodando em http://localhost:${PORT}`)
+app.listen(port, () => {
+    console.log(`App rodando em http://localhost:${port}`)
 })
 
 
