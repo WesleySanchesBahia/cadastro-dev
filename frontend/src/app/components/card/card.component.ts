@@ -13,7 +13,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { config } from '../../types/types-modal';
 import { Dev } from '../../types/types-dev';
-import { atualizarCadastroDev, atualizarCadastroDevComSucesso, buscarDevs } from '../../store/dev.actions';
+import { atualizarCadastroDev, atualizarCadastroDevComSucesso, buscarDevs, deletarCadastroDev, deletarCadastroDevComSucesso } from '../../store/dev.actions';
 import { Actions, ofType } from '@ngrx/effects';
 
 @Component({
@@ -33,20 +33,9 @@ export class CardComponent implements OnInit {
     private acoes$: Actions,
     private store:Store<{dev:EstadoDev}>
   ) {
-    this.formUpdate = this.formBuilder.group({
-      _id: [''],
-      githubUsername: [''],
-      avatarUrl: [''],
-      name: ['', Validators.required],
-      email: [''],
-      city: ['', Validators.required],
-      education: [''],
-      technologies: ['', Validators.required],
-    });
-
-
     this.dataBaseUsers$ = this.store.select((estado) => estado.dev.devs);
     this.loader$ = this.store.select((estado) => estado.dev.carregando);
+
     this.acoes$.pipe(ofType(atualizarCadastroDevComSucesso)).subscribe({
       next:() =>{
         this.modal.close();
@@ -58,7 +47,29 @@ export class CardComponent implements OnInit {
       }
     })
 
+    this.acoes$.pipe(ofType(deletarCadastroDevComSucesso)).subscribe({
+      next:() =>{
+        this.alert.showError("Deletado com sucesso!");
+        this.searchUsers(this.nameSearch);
+      },
+      error:() => {
+        this.alert.showError("Erro ao realizar essa ação!")
+      }
+    })
+
+    this.formUpdate = this.formBuilder.group({
+      _id: [''],
+      githubUsername: [''],
+      avatarUrl: [''],
+      name: ['', Validators.required],
+      email: [''],
+      city: ['', Validators.required],
+      education: [''],
+      technologies: ['', Validators.required],
+    });
+
   }
+
   dataBaseUsers$!: Observable<Dev[]>;
   loader$!: Observable<boolean>;
 
@@ -119,17 +130,6 @@ export class CardComponent implements OnInit {
 
   deleteUser(dev: Dev): void {
     if(dev._id)
-    this.service.delete(dev._id).subscribe(
-      {
-        next:(e) => {
-          this.alert.showError("Deletado com sucesso!");
-          this.searchUsers(this.nameSearch);
-        },
-        error:() => {
-          this.alert.showError("Erro ao realizar essa ação!")
-        }
-      }
-    ).add(() => {
-    })
+    this.store.dispatch(deletarCadastroDev({id:dev._id}));
   }
 }

@@ -50,7 +50,7 @@ class DevController {
     async  delete(req, res) {
         try {
             await Dev.findByIdAndDelete(req.params.id);
-            return res.status(204)
+            return res.status(204).json({deletado:true})
         } catch (erro) {
             return res.status(500).json({error:erro});
         }

@@ -41,26 +41,42 @@ export class DevsEffects {
       ofType(DevAcoes.cadastrarNovoDev),
       switchMap((acao) =>
         this.service.post(acao.novoDev).pipe(
-          map((devs) => DevAcoes.cadastrarNovoDevComSucesso({devs})),
+          map((devs) => DevAcoes.cadastrarNovoDevComSucesso({ devs })),
           catchError((error) =>
-          of(DevAcoes.cadastrarNovoDevErro({erro:error.message}))
+            of(DevAcoes.cadastrarNovoDevErro({ erro: error.message }))
           )
         )
       )
     )
-  )
+  );
 
   atualizarCadastroDev$ = createEffect(() =>
     this.acoes$.pipe(
-    ofType(DevAcoes.atualizarCadastroDev),
-    switchMap((acao) =>
-      this.service.put(acao.atualizarDev).pipe(
-        map((devs) => DevAcoes.atualizarCadastroDevComSucesso({devs})),
-        catchError((error) =>
-        of(DevAcoes.cadastrarNovoDevErro({erro:error.message}))
+      ofType(DevAcoes.atualizarCadastroDev),
+      switchMap((acao) =>
+        this.service.put(acao.atualizarDev).pipe(
+          map((devs) => DevAcoes.atualizarCadastroDevComSucesso({ devs })),
+          catchError((error) =>
+            of(DevAcoes.cadastrarNovoDevErro({ erro: error.message }))
+          )
         )
       )
     )
-  )
-  )
+  );
+
+  deletarCadastroDev$ = createEffect(() =>
+    this.acoes$.pipe(
+      ofType(DevAcoes.deletarCadastroDev),
+      switchMap((acao) =>
+        this.service.delete(acao.id).pipe(
+          map((deletado) =>
+            DevAcoes.deletarCadastroDevComSucesso({ deletado })
+          ),
+          catchError((error) =>
+            of(DevAcoes.cadastrarNovoDevErro({ erro: error.message }))
+          )
+        )
+      )
+    )
+  );
 }

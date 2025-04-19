@@ -54,7 +54,7 @@ export class DevService {
 
   delete(id:string):Observable<any>{
     return this.http.delete<any>(`${this.url}/${id}`).pipe(map((res) => {
-      return res.content;
+      return res;
     }), catchError(this.handleError))
   }
 }

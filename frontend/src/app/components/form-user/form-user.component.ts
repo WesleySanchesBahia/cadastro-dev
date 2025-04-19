@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from '../../services/alert.service';
-import { DevService } from '../../services/dev.service';
 import { Store } from '@ngrx/store';
 import { EstadoDev } from '../../store/dev.states';
 import { Observable } from 'rxjs';

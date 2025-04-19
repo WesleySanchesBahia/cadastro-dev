@@ -3,6 +3,7 @@ import mongoose, {model} from "mongoose";
 
 const DevSchema = mongoose.Schema(
     {
+        githubUsername:{type:String},
         name: {type:String, required:true},
         avatarUrl:{type:String},
         email: {type:String},

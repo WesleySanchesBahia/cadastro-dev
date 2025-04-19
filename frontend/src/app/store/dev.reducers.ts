@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { stateInicial } from "./dev.states";
-import { atualizarCadastroDev, atualizarCadastroDevComSucesso, atualizarCadastroErro, buscarDevPorFiltro, buscarDevPorFiltroComSucesso, buscarDevPorFiltroErro, buscarDevs, buscarDevsComErro, buscarDevsComSucesso, cadastrarNovoDev, cadastrarNovoDevComSucesso, cadastrarNovoDevErro } from "./dev.actions";
+import { atualizarCadastroDev, atualizarCadastroDevComSucesso, atualizarCadastroErro, buscarDevPorFiltro, buscarDevPorFiltroComSucesso, buscarDevPorFiltroErro, buscarDevs, buscarDevsComErro, buscarDevsComSucesso, cadastrarNovoDev, cadastrarNovoDevComSucesso, cadastrarNovoDevErro, deletarCadastroDev, deletarCadastroDevComSucesso, deletarCadastroErro } from "./dev.actions";
 
 export const devsReducer = createReducer(
   stateInicial,
@@ -18,5 +18,9 @@ export const devsReducer = createReducer(
 
   on(atualizarCadastroDev, (estado,{atualizarDev}) => ({...estado, atualizarDev, carregando:true})),
   on(atualizarCadastroDevComSucesso, (estado, {devs}) => ({...estado, devs, carregando:false})),
-  on(atualizarCadastroErro, (estado, {erro}) => ({...estado, erro, carregando:false}))
+  on(atualizarCadastroErro, (estado, {erro}) => ({...estado, erro, carregando:false})),
+
+  on(deletarCadastroDev, (estado, {id}) => ({...estado, id, carregando:true})),
+  on(deletarCadastroDevComSucesso, (estado, {deletado}) => ({...estado, deletado, carregando:false})),
+  on(deletarCadastroErro, (estado, {erro})=>({...estado, erro, carregando:false}))
 )
