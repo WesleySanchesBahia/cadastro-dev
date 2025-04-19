@@ -13,7 +13,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { config } from '../../types/types-modal';
 import { Dev } from '../../types/types-dev';
-import { buscarDevs } from '../../store/dev.actions';
+import { atualizarCadastroDev, atualizarCadastroDevComSucesso, buscarDevs } from '../../store/dev.actions';
+import { Actions, ofType } from '@ngrx/effects';
 
 @Component({
   selector: 'app-card',
@@ -29,10 +30,10 @@ export class CardComponent implements OnInit {
     private modal: ModalService,
     private formBuilder: FormBuilder,
     private service: DevService,
-
+    private acoes$: Actions,
     private store:Store<{dev:EstadoDev}>
   ) {
-    this.formEdit = this.formBuilder.group({
+    this.formUpdate = this.formBuilder.group({
       _id: [''],
       githubUsername: [''],
       avatarUrl: [''],
@@ -46,16 +47,27 @@ export class CardComponent implements OnInit {
 
     this.dataBaseUsers$ = this.store.select((estado) => estado.dev.devs);
     this.loader$ = this.store.select((estado) => estado.dev.carregando);
+    this.acoes$.pipe(ofType(atualizarCadastroDevComSucesso)).subscribe({
+      next:() =>{
+        this.modal.close();
+        this.alert.showSuccess('Atualizado com sucesso.');
+        this.searchUsers(this.nameSearch);
+      },
+      error:() => {
+
+      }
+    })
+
   }
   dataBaseUsers$!: Observable<Dev[]>;
   loader$!: Observable<boolean>;
 
-  formEdit: FormGroup;
+  formUpdate: FormGroup;
   configModal!: config;
   nameSearch!: string;
 
   ngOnInit(): void {
-    this.store.dispatch(buscarDevs());
+   this.getUsers();
   }
 
   close(): void {
@@ -63,15 +75,7 @@ export class CardComponent implements OnInit {
   }
 
   getUsers(): void{
-    this.service.get().subscribe({
-      next:(res) => {
-        if(res.content)
-        this.dataBaseUsers$ = res.content;
-      },
-      error:(e) => {
-
-      }
-    })
+    this.store.dispatch(buscarDevs())
   }
 
   searchUsers(nameUser: string): void {
@@ -105,27 +109,12 @@ export class CardComponent implements OnInit {
       })
     );
 
-    this.formEdit.patchValue(dev);
+    this.formUpdate.patchValue(dev);
   }
 
 
   updateDev(): void {
-    this.service.put(this.formEdit.value).subscribe(
-      {
-        next:(e:boolean) => {
-          if(e){
-            this.modal.close();
-            this.alert.showSuccess('Atualizado com sucesso.');
-            this.searchUsers(this.nameSearch);
-          }
-        },
-        error:(e) => {
-
-        }
-      }
-    ).add(() => {
-    })
-
+    this.store.dispatch(atualizarCadastroDev({atualizarDev:this.formUpdate.value}))
   }
 
   deleteUser(dev: Dev): void {

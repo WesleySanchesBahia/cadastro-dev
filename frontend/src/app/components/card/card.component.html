@@ -30,7 +30,7 @@
 </div>
 
 <ng-template #ContentOfModalUser>
-  <form id="form-card" [formGroup]="formEdit">
+  <form id="form-card" [formGroup]="formUpdate">
     <app-input label="Avatar (URL) " formControlName="avatarUrl"></app-input>
     <app-input label="Nome *" formControlName="name"></app-input>
     <app-input label="Email" formControlName="email"></app-input>
@@ -40,7 +40,7 @@
 
     <div class="container-buttons">
       <button  id="button-close" (click)="close()">Fechar</button>
-      <button id="button-save"  (click)="updateDev()" [disabled]="formEdit.invalid">Alterar</button>
+      <button id="button-save" (click)="updateDev()" [disabled]="formUpdate.invalid">Alterar</button>
       </div>
   </form>
 </ng-template>

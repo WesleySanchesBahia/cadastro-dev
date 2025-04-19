@@ -6,7 +6,10 @@ import { DevService } from '../../services/dev.service';
 import { Store } from '@ngrx/store';
 import { EstadoDev } from '../../store/dev.states';
 import { Observable } from 'rxjs';
-import { cadastrarNovoDev, cadastrarNovoDevComSucesso } from '../../store/dev.actions';
+import {
+  cadastrarNovoDev,
+  cadastrarNovoDevComSucesso,
+} from '../../store/dev.actions';
 import { Actions, ofType } from '@ngrx/effects';
 
 @Component({
@@ -16,14 +19,12 @@ import { Actions, ofType } from '@ngrx/effects';
   styleUrl: './form-user.component.scss',
 })
 export class FormUserComponent {
-
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private alert: AlertService,
-    private service: DevService,
     private acoes$: Actions,
-    private store:Store<{dev:EstadoDev}>
+    private store: Store<{ dev: EstadoDev }>
   ) {
     this.formDev = this.formBuilder.group({
       githubUsername: [''],
@@ -37,17 +38,18 @@ export class FormUserComponent {
 
     this.loader$ = this.store.select((estado) => estado.dev.carregando);
     this.acoes$.pipe(ofType(cadastrarNovoDevComSucesso)).subscribe({
-      next:(res) => {
-        this.alert.showSuccess("Registrado com sucesso!")
+      next: (res) => {
+        this.alert.showSuccess('Registrado com sucesso!');
         this.formDev.reset();
         window.scrollTo({
           top: 0,
-            behavior: 'smooth',
+          behavior: 'smooth',
         });
-      },error:(err) =>{
-        this.alert.showError("Usuário não encontrado");
-      }
-    })
+      },
+      error: (err) => {
+        this.alert.showError('Usuário não encontrado');
+      },
+    });
   }
 
   formDev!: FormGroup;
@@ -55,8 +57,6 @@ export class FormUserComponent {
 
   loader$ = new Observable();
   @Output() registered = new EventEmitter<boolean>();
-
-
 
   buscarUserGitHub(): void {
     const username = this.formDev.value.githubUsername;
@@ -74,17 +74,15 @@ export class FormUserComponent {
             city: data.location || '',
           });
         },
-        error:() =>{
-        }
+        error: () => {},
       });
     }
   }
 
   submit(): void {
     if (this.formDev.valid) {
-      const dev = this.formDev.value
-      this.store.dispatch(cadastrarNovoDev({novoDev:dev}));
+      const dev = this.formDev.value;
+      this.store.dispatch(cadastrarNovoDev({ novoDev: dev }));
     }
   }
-
 }

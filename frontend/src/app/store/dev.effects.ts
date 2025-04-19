@@ -49,4 +49,18 @@ export class DevsEffects {
       )
     )
   )
+
+  atualizarCadastroDev$ = createEffect(() =>
+    this.acoes$.pipe(
+    ofType(DevAcoes.atualizarCadastroDev),
+    switchMap((acao) =>
+      this.service.put(acao.atualizarDev).pipe(
+        map((devs) => DevAcoes.atualizarCadastroDevComSucesso({devs})),
+        catchError((error) =>
+        of(DevAcoes.cadastrarNovoDevErro({erro:error.message}))
+        )
+      )
+    )
+  )
+  )
 }
