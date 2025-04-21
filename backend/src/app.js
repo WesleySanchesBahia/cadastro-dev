@@ -3,7 +3,7 @@ import routes from "./routes/routes.js";
 import cors from "cors";
 
 const corsOptions = {
-    origin: 'https://cadastro-dev.onrender.com',
+    origin: 'https://cadastro-dev-iota.vercel.app',
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
   }
 class App {
