@@ -12,4 +12,4 @@ O desafio proposto consiste em implementar uma aplicação onde temos um cadastr
 - Workspaces (Multi projetos)
 
 ### Demo da aplicação
-O aplicação está disponível em: https://cadastro-dev-iota.vercel.app/ — fique à vontade para conferir!
+Aplicação está disponível em: https://cadastro-dev-iota.vercel.app/ — fique à vontade para conferir!
