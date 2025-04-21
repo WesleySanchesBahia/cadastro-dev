@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  APIURL: 'SUA_API'
+  APIURL: 'https://cadastro-dev.onrender.com/dev'
 };
