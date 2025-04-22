@@ -1,3 +1,5 @@
+@import "../../../sass/styles-variable.scss";
+
 #card-user {
   width: 100%;
   display: flex;
@@ -18,7 +20,7 @@
   width: 300px;
   height: 219px;
 
-  color: #fff;
+  color: $secundary-color;
   padding: 16px;
 
   display: flex;
@@ -31,7 +33,7 @@
       height: 80px;
       object-fit: cover;
       border-radius: 50%;
-      border: 3px solid #1a202c;
+      border: 3px solid  $primary-color;
       position: absolute;
       top: -45px;
       left: 65%;
@@ -40,7 +42,7 @@
 
   .card {
     width: 100%;
-    background: #1a202c;
+    background: $primary-color;
     height: 175px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
@@ -64,7 +66,7 @@
         margin: 1rem 0rem 0rem 0rem;
         a:first-child {
           text-decoration: none;
-          color: #68d391;
+          color: $button-color;
           font-weight: 500;
         }
         .options-icons {
@@ -106,7 +108,7 @@
       height: 33px;
       width: 100px;
       border-radius: 4px;
-      background-color: #38a169;
+      background-color: $button-color;
       font-size: 16px;
       font-weight: 500;
       &:hover {

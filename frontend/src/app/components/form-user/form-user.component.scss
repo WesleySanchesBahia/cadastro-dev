@@ -1,3 +1,5 @@
+@import "../../../sass/styles-variable.scss";
+
 .container-form{
   width: 400px;
   height: 833px;
@@ -21,7 +23,7 @@ form {
   border-width: 1px;
 
 
-  background: #fff;
+  background: $secundary-color;
   box-shadow: 0 2px 8px #00000066;
   display: flex;
   flex-direction: column;
@@ -67,7 +69,7 @@ form {
     height: 42px;
     border: 1.8px solid #a0aec0;
     font-size: 16px;
-    background-color: #38A169;
+    background-color: $button-color;
     font-weight: 500;
     margin-top: 1rem 0rem 0rem;
     &:hover{
