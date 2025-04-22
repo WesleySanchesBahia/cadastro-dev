@@ -3,7 +3,7 @@ import routes from "./routes/routes.js";
 import cors from "cors";
 import dotenv from 'dotenv';
 dotenv.config();
-const domainProd = process.env.DOMAIN_PROD || "http://localhost:4200";
+const domainProd =  "http://localhost:4200";
 
 const corsOptions = {
     origin: domainProd,

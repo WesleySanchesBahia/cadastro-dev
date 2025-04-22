@@ -1,7 +1,9 @@
-<app-loader *ngIf="loader$ | async"></app-loader>
 <div id="card-user" >
   <div class="content">
-    <div class="card-container" *ngFor="let user of dataBaseUsers$ | async; let i = index">
+    <div *ngIf="dataBaseUsers$ | async as dados; else carregando">
+      <div *ngIf="dados.length > 0; else notFoundDev"></div>
+    </div>
+    <div class="card-container" *ngFor="let user of dataBaseUsers$  | async;">
       <div class="logo">
         <img [src]="!user.avatarUrl ? 'assets/images/profile-default.jpeg':user.avatarUrl" alt="Foto de {{ user.name }}" loading="lazy" />
       </div>
@@ -28,6 +30,16 @@
     </div>
   </div>
 </div>
+
+<ng-template #carregando>
+  <app-loader *ngIf="loader$ | async"></app-loader>
+</ng-template>
+
+<ng-template #notFoundDev>
+  <div id="container-not-fount-dev">
+    <span >Nenhum <strong>dev</strong> encontrado!</span>
+  </div>
+</ng-template>
 
 <ng-template #ContentOfModalUser>
   <form id="form-card" [formGroup]="formUpdate">

@@ -128,3 +128,15 @@
     }
   }
 }
+
+#container-not-fount-dev{
+  width: 600px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  span{
+    font-size: 24px;
+  }
+}
